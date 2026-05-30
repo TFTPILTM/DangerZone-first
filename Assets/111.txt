@@ -1,0 +1,35 @@
+title: Start
+---
+
+大脑：
+“今天结束了。”
+
+<<if $bloodSugar >= 80>>
+胰脏：
+“今天的波动有点太大了。”
+<<endif>>
+
+<<if $pressure >= 80>>
+大脑：
+“你今天一直处于紧绷状态。”
+<<endif>>
+
+<<if $fatigue >= 80>>
+胃：
+“已经连续很久没有好好休息了吧。”
+<<endif>>
+
+<<if $mental <= 30>>
+大脑：
+“你现在不像是在生活，更像是在硬撑。”
+<<endif>>
+
+<<if $bloodSugar < 80 and $pressure < 80 and $fatigue < 80 and $mental > 40>>
+胰脏：
+“今天总算稳定了一点。”
+<<endif>>
+
+大脑：
+“明天也别太勉强自己了。”
+
+===
