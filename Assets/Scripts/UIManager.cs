@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public Text fatigueText;
     public Text mentalText;
     public Text wealthText;
+    public Text dayText;
 
     void Start()
     {
@@ -25,7 +26,8 @@ public class UIManager : MonoBehaviour
     public void UpdateUI()
     {
         if (PlayerStatus.instance == null) return;
-
+        dayText.text =
+    "Day " + DayManager.instance.currentDay;
         bloodSugarText.text = "ÑªÌÇ: " + PlayerStatus.instance.bloodSugar;
         pressureText.text = "Ñ¹Á¦: " + PlayerStatus.instance.pressure;
         fatigueText.text = "Æ£±¹: " + PlayerStatus.instance.fatigue;
