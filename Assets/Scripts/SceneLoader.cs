@@ -21,6 +21,10 @@ public class SceneLoader : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MeetingScene");
     }
+    public void LoadEatingScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("EatingScene");
+    }
     public void QuitGame()
     {
         Application.Quit();

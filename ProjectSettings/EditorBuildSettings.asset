@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MeetingScene.unity
     guid: bb18f335a275125478f33cf1fedf9fc9
+  - enabled: 1
+    path: Assets/Scenes/EatingScene.unity
+    guid: 7b7c091fc1ffebc48bcf61d359034272
   m_configObjects: {}

@@ -167,19 +167,23 @@ public class EventManager : MonoBehaviour
         Debug.Log("Exercise");
     }
 
+    //public void Eating()
+    //{
+    //    eventNumber++;
+
+    //    PlayerStatus.instance.bloodSugar += 15;
+    //    PlayerStatus.instance.fatigue -= 5;
+
+    //    TriggerRandomEvent();
+
+    //    UIManager ui = FindObjectOfType<UIManager>();
+    //    if (ui != null) ui.UpdateUI();
+
+    //    Debug.Log("Eating");
+    //}
     public void Eating()
     {
-        eventNumber++;
-
-        PlayerStatus.instance.bloodSugar += 15;
-        PlayerStatus.instance.fatigue -= 5;
-
-        TriggerRandomEvent();
-
-        UIManager ui = FindObjectOfType<UIManager>();
-        if (ui != null) ui.UpdateUI();
-
-        Debug.Log("Eating");
+        FindObjectOfType<SceneLoader>().LoadEatingScene();
     }
 
     public void Sleeping()
