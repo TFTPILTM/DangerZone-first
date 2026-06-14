@@ -11,6 +11,11 @@ public class UIManager : MonoBehaviour
     public Text wealthText;
     public Text dayText;
 
+    public Text bloodSugarChangeText;
+    public Text pressureChangeText;
+    public Text fatigueChangeText;
+    public Text mentalChangeText;
+    public Text wealthChangeText;
     void Start()
     {
         StartCoroutine(InitUI());
@@ -22,7 +27,52 @@ public class UIManager : MonoBehaviour
         yield return null;
         UpdateUI();
     }
+    public void ShowChange(
+    int bloodSugar,
+    int pressure,
+    int fatigue,
+    int mental,
+    int wealth)
+    {
+        SetChangeText(bloodSugarChangeText, bloodSugar);
+        SetChangeText(pressureChangeText, pressure);
+        SetChangeText(fatigueChangeText, fatigue);
+        SetChangeText(mentalChangeText, mental);
+        SetChangeText(wealthChangeText, wealth);
 
+        StopAllCoroutines();
+        StartCoroutine(ClearChangeText());
+    }
+
+    void SetChangeText(Text text, int value)
+    {
+        if (value == 0)
+        {
+            text.text = "";
+            return;
+        }
+
+        string color;
+
+        if (text == mentalChangeText)
+            color = value > 0 ? "green" : "red";
+        else
+            color = value > 0 ? "red" : "green";
+
+        text.text =
+            $"<color={color}>({(value > 0 ? "+" : "")}{value})</color>";
+    }
+
+    IEnumerator ClearChangeText()
+    {
+        yield return new WaitForSeconds(3f);
+
+        bloodSugarChangeText.text = "";
+        pressureChangeText.text = "";
+        fatigueChangeText.text = "";
+        mentalChangeText.text = "";
+        wealthChangeText.text = "";
+    }
     public void UpdateUI()
     {
         if (PlayerStatus.instance == null) return;

@@ -87,7 +87,7 @@ public class MealManager : MonoBehaviour
     }
     void EndMeal()
     {
-        gameTime = 999999;
+        Time.timeScale = 0f;
 
         resultPanel.SetActive(true);
 
@@ -105,14 +105,12 @@ public class MealManager : MonoBehaviour
     }
     public void ReturnToGame()
     {
-        Debug.Log("返回前血糖=" + PlayerStatus.instance.bloodSugar);
+        Time.timeScale = 1f;
 
         PlayerStatus.instance.bloodSugar += bloodSugar;
         PlayerStatus.instance.pressure += pressure;
         PlayerStatus.instance.fatigue += fatigue;
         PlayerStatus.instance.mental += mental;
-
-        Debug.Log("返回后血糖=" + PlayerStatus.instance.bloodSugar);
 
         EventManager.instance.eventNumber++;
 

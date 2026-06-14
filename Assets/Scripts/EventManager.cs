@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class EventManager : MonoBehaviour
 {
@@ -18,9 +19,16 @@ public class EventManager : MonoBehaviour
         public int mental;
     }
 
+    [Header("Action Panel")]
+    public GameObject WorkPanel;
+    public GameObject ExercisePanel;
+    public GameObject SleepPanel;
+
+
     public List<RandomEventData> eventList = new List<RandomEventData>();
 
     public int eventNumber;
+  
 
     void Awake()
     {
@@ -37,6 +45,12 @@ public class EventManager : MonoBehaviour
 
     void Start()
     {
+
+        WorkPanel.SetActive(false);
+        ExercisePanel.SetActive(false);
+        SleepPanel.SetActive(false);
+
+
         if (eventList.Count == 0)
         {
             eventList.Add(new RandomEventData
@@ -70,6 +84,15 @@ public class EventManager : MonoBehaviour
             });
         }
     }
+    // 显示操作面板的协程
+    IEnumerator ShowActionPanel(GameObject panel)
+    {
+        panel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        panel.SetActive(false);
+    }
 
     public void TriggerRandomEvent()
     {
@@ -86,6 +109,21 @@ public class EventManager : MonoBehaviour
         PlayerStatus.instance.pressure += e.pressure;
         PlayerStatus.instance.fatigue += e.fatigue;
         PlayerStatus.instance.mental += e.mental;
+
+        UIManager ui = FindObjectOfType<UIManager>();
+
+        if (ui != null)
+        {
+            ui.UpdateUI();
+
+            ui.ShowChange(
+                e.bloodSugar,
+                e.pressure,
+                e.fatigue,
+                e.mental,
+                0
+            );
+        }
 
         string effect = "";
 
@@ -126,7 +164,7 @@ public class EventManager : MonoBehaviour
             Debug.LogWarning("找不到 EventPopupUI");
         }
 
-        UIManager ui = FindObjectOfType<UIManager>();
+        
         if (ui != null) ui.UpdateUI();
 
         Debug.Log("随机事件：" + e.eventName);
@@ -134,6 +172,33 @@ public class EventManager : MonoBehaviour
 
     public void Working()
     {
+        StartCoroutine(WorkingProcess());
+    }
+
+    IEnumerator WorkingProcess()
+    {
+        WorkPanel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        UIManager ui = FindObjectOfType<UIManager>();
+        if (ui != null)
+        {
+            ui.UpdateUI();
+
+            ui.ShowChange(
+                -5,
+                10,
+                15,
+                -5,
+                10
+            );
+        }
+            ui.UpdateUI();
+
+        yield return new WaitForSeconds(1f);
+
+        WorkPanel.SetActive(false);
+
         eventNumber++;
 
         PlayerStatus.instance.bloodSugar -= 5;
@@ -144,14 +209,38 @@ public class EventManager : MonoBehaviour
 
         TriggerRandomEvent();
 
-        UIManager ui = FindObjectOfType<UIManager>();
-        if (ui != null) ui.UpdateUI();
-
-        Debug.Log("Working");
+        
     }
 
     public void Exercise()
     {
+        StartCoroutine(ExerciseProcess());
+    }
+
+    IEnumerator ExerciseProcess()
+    {
+        ExercisePanel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        UIManager ui = FindObjectOfType<UIManager>();
+
+        if (ui != null)
+        {
+            ui.ShowChange(
+             -10,
+             -10,
+             10,
+             15,
+             0
+             );
+        }
+        ui.UpdateUI();
+
+        yield return new WaitForSeconds(1f);
+
+        ExercisePanel.SetActive(false);
+
         eventNumber++;
 
         PlayerStatus.instance.bloodSugar -= 10;
@@ -159,14 +248,14 @@ public class EventManager : MonoBehaviour
         PlayerStatus.instance.mental += 15;
         PlayerStatus.instance.pressure -= 10;
 
-        TriggerRandomEvent();
+       
 
-        UIManager ui = FindObjectOfType<UIManager>();
-        if (ui != null) ui.UpdateUI();
+            TriggerRandomEvent();
+
+      
 
         Debug.Log("Exercise");
     }
-
     //public void Eating()
     //{
     //    eventNumber++;
@@ -188,6 +277,32 @@ public class EventManager : MonoBehaviour
 
     public void Sleeping()
     {
+        StartCoroutine(SleepingProcess());
+    }
+
+    IEnumerator SleepingProcess()
+    {
+        SleepPanel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        UIManager ui = FindObjectOfType<UIManager>();
+        if (ui != null)
+        {
+            ui.ShowChange(
+                    -5,
+                    -10,
+                    -20,
+                    10,
+                    0
+                );
+        }
+        ui.UpdateUI();
+
+        yield return new WaitForSeconds(1f);
+
+        SleepPanel.SetActive(false);
+
         eventNumber++;
 
         PlayerStatus.instance.bloodSugar -= 5;
@@ -197,10 +312,9 @@ public class EventManager : MonoBehaviour
 
         isSleeping = true;
 
-        TriggerRandomEvent();
+       
 
-        UIManager ui = FindObjectOfType<UIManager>();
-        if (ui != null) ui.UpdateUI();
+        
 
         Debug.Log("Sleeping");
     }
