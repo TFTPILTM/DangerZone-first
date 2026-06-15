@@ -16,8 +16,37 @@ public class UIManager : MonoBehaviour
     public Text fatigueChangeText;
     public Text mentalChangeText;
     public Text wealthChangeText;
+
+    public static UIManager instance;
+
+    public GameObject workPanel;
+    public GameObject exercisePanel;
+    public GameObject sleepPanel;
+    
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
+    
+        if (workPanel != null)
+            workPanel.SetActive(false);
+
+        if (exercisePanel != null)
+            exercisePanel.SetActive(false);
+
+        if (sleepPanel != null)
+            sleepPanel.SetActive(false);
+
         StartCoroutine(InitUI());
     }
 
@@ -75,13 +104,25 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateUI()
     {
-        if (PlayerStatus.instance == null) return;
-        dayText.text =
-    "Day " + DayManager.instance.currentDay;
-        bloodSugarText.text = "血糖: " + PlayerStatus.instance.bloodSugar;
-        pressureText.text = "压力: " + PlayerStatus.instance.pressure;
-        fatigueText.text = "疲惫: " + PlayerStatus.instance.fatigue;
-        mentalText.text = "精神: " + PlayerStatus.instance.mental;
-        wealthText.text = "财富: " + PlayerStatus.instance.wealth;
+        if (PlayerStatus.instance == null)
+            return;
+
+        if (DayManager.instance != null && dayText != null)
+            dayText.text = "Day " + DayManager.instance.currentDay;
+
+        if (bloodSugarText != null)
+            bloodSugarText.text = "血糖: " + PlayerStatus.instance.bloodSugar;
+
+        if (pressureText != null)
+            pressureText.text = "压力: " + PlayerStatus.instance.pressure;
+
+        if (fatigueText != null)
+            fatigueText.text = "疲惫: " + PlayerStatus.instance.fatigue;
+
+        if (mentalText != null)
+            mentalText.text = "精神: " + PlayerStatus.instance.mental;
+
+        if (wealthText != null)
+            wealthText.text = "财富: " + PlayerStatus.instance.wealth;
     }
 }

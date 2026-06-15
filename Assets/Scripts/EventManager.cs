@@ -19,10 +19,6 @@ public class EventManager : MonoBehaviour
         public int mental;
     }
 
-    [Header("Action Panel")]
-    public GameObject WorkPanel;
-    public GameObject ExercisePanel;
-    public GameObject SleepPanel;
 
 
     public List<RandomEventData> eventList = new List<RandomEventData>();
@@ -45,10 +41,6 @@ public class EventManager : MonoBehaviour
 
     void Start()
     {
-
-        WorkPanel.SetActive(false);
-        ExercisePanel.SetActive(false);
-        SleepPanel.SetActive(false);
 
 
         if (eventList.Count == 0)
@@ -177,7 +169,7 @@ public class EventManager : MonoBehaviour
 
     IEnumerator WorkingProcess()
     {
-        WorkPanel.SetActive(true);
+        UIManager.instance.workPanel.SetActive(true);
 
         yield return new WaitForSeconds(2f);
         UIManager ui = FindObjectOfType<UIManager>();
@@ -197,7 +189,7 @@ public class EventManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        WorkPanel.SetActive(false);
+        UIManager.instance.workPanel.SetActive(false);
 
         eventNumber++;
 
@@ -219,7 +211,7 @@ public class EventManager : MonoBehaviour
 
     IEnumerator ExerciseProcess()
     {
-        ExercisePanel.SetActive(true);
+        UIManager.instance.exercisePanel.SetActive(true);
 
         yield return new WaitForSeconds(2f);
 
@@ -239,7 +231,7 @@ public class EventManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        ExercisePanel.SetActive(false);
+        UIManager.instance.exercisePanel.SetActive(false);
 
         eventNumber++;
 
@@ -282,7 +274,7 @@ public class EventManager : MonoBehaviour
 
     IEnumerator SleepingProcess()
     {
-        SleepPanel.SetActive(true);
+        UIManager.instance.sleepPanel.SetActive(true);
 
         yield return new WaitForSeconds(2f);
 
@@ -301,7 +293,9 @@ public class EventManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        SleepPanel.SetActive(false);
+        UIManager.instance.sleepPanel.SetActive(false);
+
+       
 
         eventNumber++;
 
